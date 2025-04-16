@@ -35,13 +35,8 @@ const Home = () => {
       console.log('File tidak ada!');
       return;
     }
-    console.log('Memanggil upload-service');
     const response = await uploadFile(file);
-    if (response.status) {
-      console.log('Apakah berhasil? ', response.data);
-    } else {
-      console.log('Apakah gagal? ', response.message);
-    }
+    console.log(response);
   };
 
   const handleReset = (): void => {

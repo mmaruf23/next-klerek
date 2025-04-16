@@ -3,7 +3,6 @@ import { ApiResponse } from "@/types/response";
 import axios, { AxiosResponse } from "axios";
 
 export const uploadFile = async (file: File): Promise<ApiResponse> => {
-  console.log("Menjalankan upload-service : " + file.name)
 
   const formData = new FormData();
   formData.append("file", file);
@@ -16,22 +15,16 @@ export const uploadFile = async (file: File): Promise<ApiResponse> => {
     })
 
     console.log("Upload sukses : " , response.data);
-    return {
-      status: true,
-      data: "Sukses aja udah"
-    };
+    return response.data;
   } catch (error) {
     console.log(error);
     
     if (axios.isAxiosError(error)) {
-      return {
-        status: false,
-        message: error.response?.data
-      };
+      return error.response?.data
     }
 
     return {
-      status: false,
+      status: 'error',
       message: "Bad request!"
     }
   }

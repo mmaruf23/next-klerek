@@ -1,11 +1,15 @@
-type SuccessResponse = {
-  status: true;
-  data: string;
+export interface DataResponse {
+  filename?: string;
+  amount?: number;
 }
 
-type ErrorResponse = {
-  status: false;
-  message: string;
+export interface SuccessResponse {
+  status: 'success';
+  data?: unknown[];
+}
+export interface ErrorResponse {
+  status: 'error';
+  message?: string;
 }
 
 export type ApiResponse = SuccessResponse | ErrorResponse;
