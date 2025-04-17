@@ -4,7 +4,7 @@ import formidable from "formidable";
 import fs from 'fs';
 import AdmZip from "adm-zip";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { ErrorResponse, SuccessResponse } from "@/types/response";
+import { DataDetail, ErrorResponse, SuccessResponse } from "@/types/response";
 import path from "path";
 import Database from "better-sqlite3";
 
@@ -62,11 +62,8 @@ export default async function handler(req:NextApiRequest, res: NextApiResponse<S
     const tempPath = path.join('/tmp', 'temp.db')
     fs.writeFileSync(tempPath, dbBuffer);
     const db = new Database(tempPath);
-    const result = db.prepare("SELECT user_id, date_tx, SUM(cash-change_pay) as total_tx from tx_tsale group by date_tx, user_id order by date_tx desc").all();
+    const result = db.prepare("SELECT store_id, user_id, date_tx, SUM(cash-change_pay) as total_tx from tx_tsale group by date_tx, user_id order by date_tx desc").all() as DataDetail[];
     
-
-    console.log(result);
-
     res.status(HttpStatusCode.Ok).json({
       status: 'success',
       data: result

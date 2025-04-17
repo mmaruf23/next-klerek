@@ -17,8 +17,6 @@ export const uploadFile = async (file: File): Promise<ApiResponse> => {
     console.log("Upload sukses : " , response.data);
     return response.data;
   } catch (error) {
-    console.log(error);
-    
     if (axios.isAxiosError(error)) {
       return error.response?.data
     }
